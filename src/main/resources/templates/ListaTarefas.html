@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:insert="fragments/layout :: head"></head>
+<body>
+
+	<div class="container">
+
+		<br />
+
+		<div class="titulo">
+			<h3>Lista de Tarefas</h3>
+			<hr>
+		</div>
+
+		<br />
+
+		<div class="text-right">
+			<a href="/tarefas/novo" class="btn btn-success">+ Nova Tarefa</a>
+		</div>
+
+		<br />
+
+		<table class="table table-bordered table-sm">
+			<thead>
+				<tr>
+					<th width="60%">Título</th>
+					<th width="20%" class="text-center">Status</th>
+					<th width="10%" class="text-center">Editar</th>
+					<th width="10%" class="text-center">Excluir</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="tarefa : ${tarefas}">
+
+					<!-- COLUNA TITULO  -->
+					<td th:text="${tarefa.titulo}"></td>
+
+					<!-- COLUNA STATUS  -->
+					<div th:switch="${tarefa.concluido}">
+						<td class="text-center text-dark" th:case="true">Finalizada</td>
+						<td class="text-center text-info" th:case="false">Nova</td>
+					</div>
+
+					<!-- COLUNA EDITAR TAREFA -->
+					<td class="text-center">
+						<form action="#" th:action="@{'/tarefas/'+${tarefa.id}}" method="get">
+							<button type="submit" class="btn btn-light btn-sm">Editar</button>
+						</form>
+					</td>
+
+					<!-- COLUNA EXCLUIR TAREFA -->
+					<td class="text-center">
+						<form th:action="@{'/tarefas/'+${tarefa.id}}" th:method="delete">
+							<button type="submit" class="btn btn-light btn-sm">Excluir</button>
+						</form>
+					</td>
+
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+
+</body>
+
+<footer th:insert="fragments/layout :: footer"></footer>
+
+</html>
